@@ -1,0 +1,84 @@
+/* General Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #d64206, #1f1f1f); /* Burnt orange to dark gray gradient */
+    color: #dcdcdc; /* Light gray text */
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Signup Section */
+.signup-section {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    padding: 100px 0;
+}
+
+.card {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    background: rgba(255, 255, 255, 0.1); /* Semi-transparent white background */
+    color: #dcdcdc; /* Light gray text */
+}
+
+.card-title {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #d64206; /* Burnt orange for headings */
+}
+
+.form-control {
+    border-radius: 10px;
+    padding: 10px;
+    border: 1px solid #d64206; /* Burnt orange border */
+    background-color: rgba(255, 255, 255, 0.1); /* Semi-transparent white background */
+    color: #dcdcdc; /* Light gray text */
+}
+
+.form-control:focus {
+    border-color: #d64206; /* Burnt orange border on focus */
+    box-shadow: 0 0 5px rgba(214, 66, 6, 0.5); /* Burnt orange shadow */
+}
+
+.btn-primary {
+    background-color: #d64206; /* Burnt orange button */
+    border: none;
+    padding: 10px;
+    font-size: 1.1rem;
+    border-radius: 10px;
+    color: #1f1f1f; /* Dark gray text */
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #b83705; /* Darker burnt orange on hover */
+}
+
+/* Footer */
+footer {
+    margin-top: auto;
+    background-color: #1f1f1f; /* Dark gray background */
+    padding: 20px 0;
+    color: #dcdcdc; /* Light gray text */
+}
+
+/* Icons */
+.fas {
+    margin-right: 10px;
+    color: #d64206; /* Burnt orange icons */
+}
+
+/* Error Messages */
+.text-danger {
+    font-size: 0.9rem;
+    color: #ff6b6b; /* Red for error messages */
+}
+
+/* Loading Spinner */
+.spinner-border {
+    vertical-align: middle;
+    color: #d64206; /* Burnt orange spinner */
+}
