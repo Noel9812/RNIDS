@@ -5,14 +5,7 @@ var currentPage = 1;
 
 $(document).ready(function () {
     // Firebase configuration
-    const firebaseConfig = {
-        apiKey: "AIzaSyBUJwBPUiPRM4igsgyPYsgBJxYFpkM8KvU",
-        authDomain: "rnids-2025.firebaseapp.com",
-        projectId: "rnids-2025",
-        storageBucket: "rnids-2025.appspot.com",
-        messagingSenderId: "192282235608",
-        appId: "1:192282235608:web:5a3b7e200c4b1148be3dad",
-        measurementId: "G-4ME3E02VQS"
+    
     };
 
     // Initialize Firebase
