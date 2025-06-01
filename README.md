@@ -126,8 +126,8 @@ pip install -r requirements.txt
 
 # Start the Flask server
 python application.py
+```
 
-```markdown
 ###  MainPage Preview
 ![RNIDS Main Page](SS/main.png)
 
