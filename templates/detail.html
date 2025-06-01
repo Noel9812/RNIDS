@@ -3,75 +3,125 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta http-equiv="Content-Type" content="text/html;charset=utf8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="robots" content="noindex, nofollow">
     <title>RNIDS - Flow Details</title>
-
-    <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- FontAwesome Icons -->
+    <!-- Bootstrap -->
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/bootstrap-theme.css') }}" rel="stylesheet">
+    <!-- FontAwesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <!-- Custom CSS -->
-    <link rel="stylesheet" type="text/css" href="static/css/main.css">
-    <link rel="stylesheet" type="text/css" href="static/css/media.css">
-
-    <!-- Plotly for Charts -->
+    <link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet">
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700|Open+Sans:300,400,700" rel="stylesheet">
+    <!-- Plotly -->
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 </head>
 <body>
     <!-- Navigation Bar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-        <div class="container">
-            <a class="navbar-brand" href="/">RNIDS</a>
-            <div class="ms-auto">
-                <a href="/profile" class="btn btn-outline-light me-2"><i class="fas fa-user"></i> Profile</a>
-                <a href="/logout" class="btn btn-outline-light"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="{{ url_for('landing') }}">
+                    <span class="brand-text">RNIDS</span>
+                </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+                <ul class="nav navbar-nav">
+                    <li><a href="{{ url_for('landing') }}">Home</a></li>
+                    <li><a href="{{ url_for('capture') }}">Dashboard</a></li>
+                    <li><a href="{{ url_for('profile') }}"><i class="fas fa-user me-1"></i> Profile</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt me-1"></i> Logout</a></li>
+                </ul>
             </div>
         </div>
     </nav>
 
     <!-- Main Content -->
-    <div class="container mt-5 pt-4">
-        <!-- Risk Level -->
-        <div class="alert alert-info text-center">
-            <h3>{{ risk|safe }}</h3>
+    <div class="container-fluid main-container">
+        <div class="row">
+            <div class="col-md-12 mb-3">
+                <a href="{{ url_for('capture') }}" class="btn btn-primary">
+                    <i class="fas fa-arrow-left"></i> Back to Dashboard
+                </a>
+            </div>
         </div>
-        <hr>
-
+        
+        <!-- Risk Level -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h3 class="card-title">Risk Assessment</h3>
+                    </div>
+                    <div class="card-body text-center">
+                        {{ risk|safe }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        
         <!-- LIME Explanation -->
         {% if exp %}
-        <div class="card mb-4">
-            <div class="card-body">
-                <h3 class="text-center">LIME-explained results using Random Forest Classifier (Top-6 values):</h3>
-                {{ exp|safe }}
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h3 class="card-title">LIME Explanation</h3>
+                    </div>
+                    <div class="card-body">
+                        <h4 class="text-center mb-3">Top 6 Features Affecting Classification</h4>
+                        {{ exp|safe }}
+                    </div>
+                </div>
             </div>
         </div>
-        <hr>
         {% endif %}
-
+        
         <!-- Auto Encoder Plot -->
-        <div class="card mb-4">
-            <div class="card-body">
-                <h3 class="text-center">Ranking features by reconstruct error by Auto Encoder:</h3>
-                {{ ae_plot|safe }}
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h3 class="card-title">Auto Encoder Analysis</h3>
+                    </div>
+                    <div class="card-body">
+                        <h4 class="text-center mb-3">Features Ranked by Reconstruction Error</h4>
+                        {{ ae_plot|safe }}
+                    </div>
+                </div>
             </div>
         </div>
-        <hr>
-
+        
         <!-- Features Table -->
-        <div class="card mb-4">
-            <div class="card-body">
-                <h3 class="text-center">List of all features and values used:</h3>
-                <div class="table-responsive">
-                    <table class="table table-bordered">
-                        {% for table in tables %}
-                        {{ table|safe }}
-                        {% endfor %}
-                    </table>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h3 class="card-title">Complete Feature Details</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            {% for table in tables %}
+                                {{ table|safe }}
+                            {% endfor %}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- JavaScript -->
+    <script src="{{ url_for('static', filename='js/jquery-2.1.1.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
 </body>
 </html>

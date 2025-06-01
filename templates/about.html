@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>About - Real-Time NIDS</title>
+
+  <!-- Bootstrap 3 -->
+  <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/bootstrap-theme.css') }}" rel="stylesheet">
+  
+  <!-- Custom CSS -->
+  <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700|Open+Sans:300,400,700" rel="stylesheet">
+
+  <!-- FontAwesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-bg-image"></div>
+    <nav class="navbar">
+      <div id="menu-toggle">
+        <div class="hamburger">
+          <span class="line"></span>
+          <span class="line"></span>
+          <span class="line"></span>
+        </div>
+        <div class="cross">
+          <span class="line"></span>
+          <span class="line"></span>
+        </div>
+      </div>
+      <ul class="main-nav">
+        <li><a href="{{ url_for('landing') }}" {% if request.endpoint == 'landing' %}class="active"{% endif %}>Home</a></li>
+        <li><a href="{{ url_for('about') }}" {% if request.endpoint == 'about' %}class="active"{% endif %}>About</a></li>
+        <li><a href="{{ url_for('landing') }}#features" {% if 'features' in request.path %}class="active"{% endif %}>Features</a></li>
+        <li><a href="{{ url_for('landing') }}#stats" {% if 'stats' in request.path %}class="active"{% endif %}>Statistics</a></li>
+        {% if not session.logged_in %}
+          <li><a href="{{ url_for('landing') }}#login" {% if 'login' in request.path %}class="active"{% endif %}>Login</a></li>
+        {% else %}
+          <li><a href="{{ url_for('profile') }}" {% if request.endpoint == 'profile' %}class="active"{% endif %}>Profile</a></li>
+          <li><a href="{{ url_for('logout') }}">Logout</a></li>
+        {% endif %}
+      </ul>
+    </nav>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="hero-text">
+            <h1>About Our <span>Security Solution</span></h1>
+            <h3>Learn about our team and technology</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Team Section -->
+  <section class="team-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 text-center">
+          <h2 class="section-title">Meet Our Team</h2>
+          <p class="section-subtitle">The brilliant minds behind this project</p>
+        </div>
+      </div>
+      
+      <div class="row">
+        <!-- Team Member 1 -->
+        <div class="col-md-3 col-sm-6">
+          <div class="team-card">
+            <div class="team-img">
+              <img src="{{ url_for('static', filename='images/team1.jpg') }}" alt="Team Member">
+              <div class="social-links">
+                <a href="https://github.com/Noel9812" target="_blank"><i class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/noel-mathews-613ab3235" target="_blank"><i class="fab fa-linkedin"></i></a>
+              </div>
+            </div>
+            <div class="team-content">
+              <h3>Noel Mathews</h3>
+              <p class="quote">"Security is not a product, but a process."</p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Team Member 2 -->
+        <div class="col-md-3 col-sm-6">
+          <div class="team-card">
+            <div class="team-img">
+              <img src="{{ url_for('static', filename='images/team2.jpg') }}" alt="Team Member">
+              <div class="social-links">
+                <a href="https://github.com/ParvathyS1103" target="_blank"><i class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/parvathy-s-770b40227" target="_blank"><i class="fab fa-linkedin"></i></a>
+              </div>
+            </div>
+            <div class="team-content">
+              <h3>Parvathy S</h3>
+              <p class="quote">"Making networks safer with AI."</p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Team Member 3 -->
+        <div class="col-md-3 col-sm-6">
+          <div class="team-card">
+            <div class="team-img">
+              <img src="{{ url_for('static', filename='images/team3.jpg') }}" alt="Team Member">
+              <div class="social-links">
+                <a href="https://github.com/shanesamofficial" target="_blank"><i class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/shanesamofficial" target="_blank"><i class="fab fa-linkedin"></i></a>
+              </div>
+            </div>
+            <div class="team-content">
+              <h3>Shane Sam Manappallil</h3>
+              <p class="quote">"Staying one step ahead of threats."</p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Team Member 4 -->
+        <div class="col-md-3 col-sm-6">
+          <div class="team-card">
+            <div class="team-img">
+              <img src="{{ url_for('static', filename='images/team4.jpg') }}" alt="Team Member">
+              <div class="social-links">
+                <a href="https://github.com/appusolu111" target="_blank"><i class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/solomon-alex-a35568228" target="_blank"><i class="fab fa-linkedin"></i></a>
+              </div>
+            </div>
+            <div class="team-content">
+              <h3>Solomon Koshy Alex</h3>
+              <p class="quote">"Designing secure and intuitive interfaces."</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Content Section -->
+  <section class="about-content">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+          <h1>About Our Network Intrusion Detection System</h1>
+          
+          <div class="about-section">
+            <h2><i class="fas fa-shield-alt"></i> Our Mission</h2>
+            <p>Our Hybrid Real-Time Network Intrusion Detection System (NIDS) is designed to provide comprehensive network security by combining signature-based and anomaly-based detection methods. We aim to protect networks from both known threats and emerging zero-day attacks.</p>
+          </div>
+          
+          <div class="about-section">
+            <h2><i class="fas fa-cogs"></i> How It Works</h2>
+            <p>The system continuously monitors network traffic, analyzing packets in real-time using a combination of:</p>
+            <ul>
+              <li>Signature-based detection for known attack patterns</li>
+              <li>Machine learning algorithms for anomaly detection</li>
+              <li>Behavioral analysis to identify suspicious activities</li>
+              <li>Real-time alerting system for immediate response</li>
+            </ul>
+          </div>
+          
+          <div class="about-section">
+            <h2><i class="fas fa-chart-line"></i> Technology Stack</h2>
+            <div class="tech-stack">
+              <div class="tech-item">
+                <i class="fab fa-python"></i>
+                <span>Python</span>
+              </div>
+              <div class="tech-item">
+                <i class="fas fa-brain"></i>
+                <span>Machine Learning</span>
+              </div>
+              <div class="tech-item">
+                <i class="fas fa-network-wired"></i>
+                <span>Packet Analysis</span>
+              </div>
+              <div class="tech-item">
+                <i class="fas fa-database"></i>
+                <span>Elasticsearch</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12 text-center">
+          <h1>Real-Time<br><span>Network Intrusion Detection System</span></h1>
+          <div class="footer-links">
+            <a href="{{ url_for('landing') }}">Home</a>
+            <a href="{{ url_for('about') }}">About</a>
+            <a href="{{ url_for('landing') }}#features">Features</a>
+            <a href="{{ url_for('landing') }}#stats">Statistics</a>
+            <a href="{{ url_for('landing') }}#login">Login</a>
+          </div>
+          <p>&copy; 2025 RNIDS. All rights reserved.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script src="{{ url_for('static', filename='js/jquery-2.1.1.js') }}"></script>
+  
+</body>
+</html>

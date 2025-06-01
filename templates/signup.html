@@ -1,106 +1,240 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RNIDS - Signup</title>
-    <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- FontAwesome Icons -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/signup.css') }}">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Signup | Real-Time NIDS</title>
+
+  <!-- Bootstrap 3 -->
+  <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/bootstrap-theme.css') }}" rel="stylesheet">
+  
+  <!-- Custom CSS -->
+  <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700|Open+Sans:300,400,700" rel="stylesheet">
+
+  <!-- FontAwesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 </head>
 <body>
-    <!-- Navigation Bar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-        <div class="container">
-            <a class="navbar-brand" href="/">RNIDS</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/">Home</a>
-                    </li>
-                </ul>
-            </div>
+  <header class="hero">
+    <div class="hero-bg-image"></div>
+    <nav class="navbar">
+      <div id="menu-toggle">
+        <div class="hamburger">
+          <span class="line"></span>
+          <span class="line"></span>
+          <span class="line"></span>
         </div>
+        <div class="cross">
+          <span class="line"></span>
+          <span class="line"></span>
+        </div>
+      </div>
+      <ul class="main-nav">
+        <li><a href="{{ url_for('landing') }}" {% if request.endpoint == 'landing' %}class="active"{% endif %}>Home</a></li>
+        <li><a href="{{ url_for('about') }}" {% if request.endpoint == 'about' %}class="active"{% endif %}>About</a></li>
+        <li><a href="{{ url_for('landing') }}#features" {% if 'features' in request.path %}class="active"{% endif %}>Features</a></li>
+        <li><a href="{{ url_for('landing') }}#stats" {% if 'stats' in request.path %}class="active"{% endif %}>Statistics</a></li>
+        <li><a href="{{ url_for('landing') }}#login" {% if 'login' in request.path %}class="active"{% endif %}>Login</a></li>
+      </ul>
     </nav>
-
-    <!-- Signup Form -->
-    <section class="signup-section">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-md-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <h3 class="card-title text-center">Signup</h3>
-                            <form id="signupForm" action="/signup" method="POST">
-                                <!-- Full Name -->
-                                <div class="mb-3">
-                                    <label for="fullname" class="form-label">
-                                        <i class="fas fa-user"></i> Full Name
-                                    </label>
-                                    <input type="text" class="form-control" id="fullname" name="fullname" required>
-                                </div>
-
-                                <!-- Email -->
-                                <div class="mb-3">
-                                    <label for="email" class="form-label">
-                                        <i class="fas fa-envelope"></i> Email
-                                    </label>
-                                    <input type="email" class="form-control" id="email" name="email" required>
-                                    <small class="text-danger" id="emailError"></small>
-                                </div>
-
-                                <!-- Username -->
-                                <div class="mb-3">
-                                    <label for="username" class="form-label">
-                                        <i class="fas fa-user-tag"></i> Username
-                                    </label>
-                                    <input type="text" class="form-control" id="username" name="username" required>
-                                </div>
-
-                                <!-- Password -->
-                                <div class="mb-3">
-                                    <label for="password" class="form-label">
-                                        <i class="fas fa-lock"></i> Password
-                                    </label>
-                                    <input type="password" class="form-control" id="password" name="password" required>
-                                    <small class="text-danger" id="passwordError"></small>
-                                </div>
-
-                                <!-- Submit Button -->
-                                <button type="submit" class="btn btn-primary w-100" id="submitButton">
-                                    <span id="submitText">Signup</span>
-                                    <span id="loadingSpinner" class="spinner-border spinner-border-sm d-none" role="status"></span>
-                                </button>
-
-                                <!-- Login Link -->
-                                <p class="text-center mt-3">
-                                    Already have an account? <a href="/">Login</a>
-                                </p>
-                            </form>
-
-                            <!-- Success/Error Message -->
-                            <div id="message" class="mt-3 text-center"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="hero-text">
+            <h1><span>Create</span><br>Your Account</h1>
+            <h3>Join our Network Intrusion Detection System</h3>
+          </div>
         </div>
-    </section>
+      </div>
+    </div>
+  </header>
 
-    <!-- Footer -->
-    <footer class="bg-dark text-white text-center py-4">
-        <p>&copy; 2023 RNIDS. All rights reserved.</p>
-    </footer>
+  <!-- Signup Section -->
+  <section class="login-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 d-flex justify-content-center">
+          <div class="login-card-wrapper">
+            <div class="card login-card">
+              <div class="card-body">
+                <div class="text-center mb-4">
+                  <i class="fas fa-user-plus fa-4x mb-3" style="color: #7447ae;"></i>
+                  <h3 class="card-title">Create Your Account</h3>
+                </div>
+                <form id="signupForm" action="{{ url_for('signup') }}" method="POST">
+                  <!-- Full Name -->
+                  <div class="mb-3">
+                    <div class="input-group">
+                      <span class="input-group-text"><i class="fas fa-user"></i></span>
+                      <input type="text" class="form-control" id="fullname" name="fullname" placeholder="Full Name" required>
+                    </div>
+                  </div>
+                  
+                  <!-- Email -->
+                  <div class="mb-3">
+                    <div class="input-group">
+                      <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                      <input type="email" class="form-control" id="email" name="email" placeholder="Email Address" required>
+                    </div>
+                    <small class="text-danger" id="emailError"></small>
+                  </div>
+                  
+                  <!-- Username -->
+                  <div class="mb-3">
+                    <div class="input-group">
+                      <span class="input-group-text"><i class="fas fa-user-tag"></i></span>
+                      <input type="text" class="form-control" id="username" name="username" placeholder="Username" required>
+                    </div>
+                  </div>
+                  
+                  <!-- Password -->
+                  <div class="mb-3">
+                    <div class="input-group">
+                      <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                      <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+                    </div>
+                    <small class="text-danger" id="passwordError"></small>
+                  </div>
+                  
+                  <button type="submit" class="btn btn-lg btn-primary w-100">
+                    <span id="submitText">Sign Up</span>
+                    <span id="loadingSpinner" class="spinner-border spinner-border-sm d-none" role="status"></span>
+                  </button>
+                  
+                  <p class="text-center mt-3">
+                    Already have an account? <a href="{{ url_for('landing') }}#login">Login</a>
+                  </p>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <!-- Bootstrap 5 JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Custom JS -->
-    <script src="{{ url_for('static', filename='js/signup.js') }}"></script>
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12 text-center">
+          <h1>Real-Time<br><span>Network Intrusion Detection System</span></h1>
+          <div class="footer-links">
+            <a href="{{ url_for('landing') }}">Home</a>
+            <a href="{{ url_for('capture') }}">NIDS</a>
+            <a href="#features">Features</a>
+            <a href="#stats">Statistics</a>
+            <a href="#login">Login</a>
+          </div>
+          <p>&copy; 2025 RNIDS. All rights reserved.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script src="{{ url_for('static', filename='js/jquery-2.1.1.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+  <script>
+    // Mobile Menu Toggle
+    $('#menu-toggle').click(function(){
+        $(this).toggleClass('open');
+        $('.main-nav').toggleClass('show-it');
+    });
+
+    // Form Submission Handling
+    // Form Submission Handling
+// Form Submission Handling
+$('#signupForm').on('submit', function(e) {
+    e.preventDefault();
+    
+    // Clear previous error messages
+    $('#emailError, #passwordError, #fullnameError, #usernameError').text('');
+    
+    const $form = $(this);
+    const $submitBtn = $form.find('button[type="submit"]');
+    const $spinner = $('#loadingSpinner');
+    const $submitText = $('#submitText');
+    
+    // Visual feedback
+    $submitText.text('Creating Account...');
+    $spinner.removeClass('d-none');
+    $submitBtn.prop('disabled', true);
+
+    // AJAX request
+    $.ajax({
+        type: 'POST',
+        url: $form.attr('action'),
+        data: $form.serialize(),
+        dataType: 'json',
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        },
+        success: function(response) {
+            if (response.success) {
+                console.log("Signup successful, redirecting to:", response.redirect);
+                // Redirect to capture page
+                window.location.href = response.redirect || "/capture";
+            } else {
+                // Handle unexpected success format
+                if (response.errors) {
+                    // Display field-specific errors
+                    if (response.errors.email) {
+                        $('#emailError').text(response.errors.email);
+                    }
+                    if (response.errors.password) {
+                        $('#passwordError').text(response.errors.password);
+                    }
+                    if (response.errors.fullname) {
+                        $('#fullnameError').text(response.errors.fullname);
+                    }
+                    if (response.errors.username) {
+                        $('#usernameError').text(response.errors.username);
+                    }
+                } else if (response.message) {
+                    alert(response.message);
+                }
+            }
+        },
+        error: function(xhr) {
+            let response;
+            try {
+                response = xhr.responseJSON;
+            } catch (e) {
+                response = { message: 'An error occurred during signup. Please try again.' };
+            }
+            
+            if (response && response.errors) {
+                // Display field-specific errors
+                if (response.errors.email) {
+                    $('#emailError').text(response.errors.email);
+                }
+                if (response.errors.password) {
+                    $('#passwordError').text(response.errors.password);
+                }
+                if (response.errors.fullname) {
+                    $('#fullnameError').text(response.errors.fullname);
+                }
+                if (response.errors.username) {
+                    $('#usernameError').text(response.errors.username);
+                }
+            } else {
+                // Display general error
+                alert(response?.message || 'An error occurred during signup. Please try again.');
+            }
+        },
+        complete: function() {
+            $submitText.text('Sign Up');
+            $spinner.addClass('d-none');
+            $submitBtn.prop('disabled', false);
+        }
+    });
+});
+  </script>
 </body>
 </html>

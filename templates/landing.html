@@ -1,84 +1,332 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RNIDS - Landing Page</title>
-    <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- FontAwesome Icons -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/landing.css') }}">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Real-Time NIDS</title>
+
+  <!-- Bootstrap 3 -->
+  <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/bootstrap-theme.css') }}" rel="stylesheet">
+  
+  <!-- Swiper CSS -->
+  <link href="{{ url_for('static', filename='css/swiper.min.css') }}" rel="stylesheet">
+  
+  <!-- Custom CSS -->
+  <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700|Open+Sans:300,400,700" rel="stylesheet">
+
+  <!-- FontAwesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 </head>
 <body>
-    <!-- Navigation Bar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-        <div class="container">
-            <a class="navbar-brand" href="/">RNIDS</a>
+  <header class="hero">
+    <div class="hero-bg-image"></div>
+    <nav class="navbar">
+      <div id="menu-toggle">
+        <div class="hamburger">
+          <span class="line"></span>
+          <span class="line"></span>
+          <span class="line"></span>
         </div>
+        <div class="cross">
+          <span class="line"></span>
+          <span class="line"></span>
+        </div>
+      </div>
+      <ul class="main-nav">
+        <li><a href="{{ url_for('landing') }}" {% if request.endpoint == 'landing' %}class="active"{% endif %}>Home</a></li>
+        <li><a href="{{ url_for('about') }}" {% if request.endpoint == 'about' %}class="active"{% endif %}>About</a></li>
+        <li><a href="{{ url_for('landing') }}#features" {% if 'features' in request.path %}class="active"{% endif %}>Features</a></li>
+        <li><a href="{{ url_for('landing') }}#stats" {% if 'stats' in request.path %}class="active"{% endif %}>Statistics</a></li>
+        {% if not session.logged_in %}
+          <li><a href="{{ url_for('landing') }}#login" {% if 'login' in request.path %}class="active"{% endif %}>Login</a></li>
+        {% else %}
+          <li><a href="{{ url_for('profile') }}" {% if request.endpoint == 'profile' %}class="active"{% endif %}>Profile</a></li>
+          <li><a href="{{ url_for('logout') }}">Logout</a></li>
+        {% endif %}
+      </ul>
     </nav>
-
-    <!-- Hero Section -->
-    <section class="hero-section">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-md-6">
-                    <h1 class="display-4">Real-Time Network Intrusion Detection System</h1>
-                    <p class="lead">Protect your network with real-time monitoring and advanced threat detection.</p>
-                    <a href="#login" class="btn btn-primary btn-lg">Get Started</a>
-                </div>
-                <div class="col-md-6">
-                    <img src="{{ url_for('static', filename='images/landing-bg.jpg') }}" alt="RNIDS" class="img-fluid">
-                </div>
-            </div>
+    </nav>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="hero-text">
+            <h1><span>Hybrid</span><br>Real-Time</h1>
+            <h3>Network Intrusion Detection System</h3>
+            {% if session.logged_in %}
+              <a href="{{ url_for('capture') }}" class="btn btn-lg btn-primary">Launch NIDS</a>
+            {% else %}
+              <a href="#login" class="btn btn-lg btn-primary">Get Started</a>
+            {% endif %}
+          </div>
         </div>
-    </section>
+      </div>
+    </div>
+  </header>
 
-    <!-- Login/Signup Form -->
-    <section id="login" class="login-section">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-md-6">
-                    <div class="card login-card">
-                        <div class="card-body">
-                            <h3 class="card-title text-center mb-4">Welcome Back!</h3>
-                            <form id="authForm">
-                                <div class="mb-3">
-                                    <label for="username" class="form-label">
-                                        <i class="fas fa-user"></i> Username
-                                    </label>
-                                    <input type="text" class="form-control" id="username" name="username" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="password" class="form-label">
-                                        <i class="fas fa-lock"></i> Password
-                                    </label>
-                                    <input type="password" class="form-control" id="password" name="password" required>
-                                </div>
-                                <button type="submit" class="btn btn-primary w-100">
-                                    <span id="submitText">Login</span>
-                                    <span id="loadingSpinner" class="spinner-border spinner-border-sm d-none" role="status"></span>
-                                </button>
-                                <p class="text-center mt-3">
-                                    Don't have an account? <a href="/signup" id="toggleSignup">Signup</a>
-                                </p>
-                            </form>
-                        </div>
-                    </div>
-                </div>
+  <!-- Features Section -->
+  <section id="features" class="case-study">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <h4 class="sub-heading">Advanced Security</h4>
+          <h1 class="heading purple"><span class="purple">Features</span> of <br>Our NIDS</h1>
+          
+          <!-- Swiper -->
+          <div class="swiper-container client-swiper">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide client-box">
+                <img src="{{ url_for('static', filename='images/monitoring.png') }}" class="client-logo">
+                <h3 class="text-left title">Real-time Threat Detection</h3>
+                <p class="text-left tag">Identifies suspicious activities instantly</p>
+                
+              </div>
+              <div class="swiper-slide client-box">
+                <img src="{{ url_for('static', filename='images/deep-learning.png') }}" class="client-logo">
+                <h3 class="text-left title">AI-Powered Analysis</h3>
+                <p class="text-left tag">Uses machine learning for anomaly detection</p>
+                
+              </div>
+              <div class="swiper-slide client-box">
+                <img src="{{ url_for('static', filename='images/log.png') }}" class="client-logo">
+                <h3 class="text-left title">Comprehensive Logging</h3>
+                <p class="text-left tag">Maintains detailed attack logs</p>
+                
+              </div>
+              <div class="swiper-slide client-box">
+                <img src="{{ url_for('static', filename='images/integration.png') }}" class="client-logo">
+                <h3 class="text-left title">Seamless Integration</h3>
+                <p class="text-left tag">Works with existing security systems</p>
+              
+              </div>
             </div>
+            
+          </div>
         </div>
-    </section>
+      </div>
+    </div>
+  </section>
 
-    <!-- Footer -->
-    <footer class="bg-dark text-white text-center py-4">
-        <p>&copy; 2025 RNIDS. All rights reserved.</p>
-    </footer>
+  <!-- Statistics Section -->
+  <section id="stats" class="stats">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4 text-center stat-box">
+          <h1 class="purple"><span class="counter">500</span>K+</h1>
+          <h3>Packets Scanned</h3>
+          <p>Real-time analysis of network traffic</p>
+        </div>
+        <div class="col-md-4 text-center stat-box">
+          <h1 class="blue counter">256</h1>
+          <h3>Intrusions Detected</h3>
+          <p>Potential threats identified</p>
+        </div>
+        <div class="col-md-4 text-center stat-box">
+          <h1 class="pink"><span class="counter">100</span>k+</h1>
+          <h3>Runtime</h3>
+          <p>Hours of continuous protection</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <!-- Bootstrap 5 JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Custom JS -->
-    <script src="{{ url_for('static', filename='js/landing.js') }}"></script>
+<!-- Login Section -->
+<section id="login" class="login-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 d-flex justify-content-center">
+        <div class="login-card-wrapper">
+          <div class="card login-card">
+            <div class="card-body">
+              <div class="text-center mb-4">
+                <i class="fas fa-shield-alt fa-4x mb-3" style="color: #7447ae;"></i>
+                <h3 class="card-title">Welcome Back!</h3>
+              </div>
+              <form id="authForm" action="{{ url_for('login') }}" method="POST">
+                <div class="mb-3">
+                  <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                    <input type="text" class="form-control" id="username" name="username" placeholder="Username" required>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-lg btn-primary w-100">
+                  <span id="submitText">Login</span>
+                  <span id="loadingSpinner" class="spinner-border spinner-border-sm d-none" role="status"></span>
+                </button>
+                <p class="text-center mt-3">
+                  Don't have an account? <a href="{{ url_for('signup') }}" id="toggleSignup">Signup</a>
+                </p>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12 text-center">
+          <h1>Real-Time<br><span>Network Intrusion Detection System</span></h1>
+          <div class="footer-links">
+            <a href="{{ url_for('landing') }}">Home</a>
+            <a href="{{ url_for('capture') }}">NIDS</a>
+            <a href="#features">Features</a>
+            <a href="#stats">Statistics</a>
+            <a href="#login">Login</a>
+          </div>
+          <p>&copy; 2025 RNIDS. All rights reserved.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script src="{{ url_for('static', filename='js/jquery-2.1.1.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/swiper.jquery.min.js') }}"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script>
+  <script src="{{ url_for('static', filename='js/jquery.counterup.min.js') }}"></script>
+  <script>
+    // ===== Core Functionality =====
+    // Mobile Menu Toggle
+    $('#menu-toggle').click(function(){
+        $(this).toggleClass('open');
+        $('.main-nav').toggleClass('show-it');
+    });
+
+    // Smooth Scrolling
+    $('a[href^="#"]').on('click', function(e) {
+        e.preventDefault();
+        $('html, body').animate({
+            scrollTop: $($(this).attr('href')).offset().top
+        }, 500);
+    });
+
+    // ===== Swiper Carousel =====
+    var featureSwiper = new Swiper('.client-swiper', {
+        slidesPerView: 3,
+        spaceBetween: 60,
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+        breakpoints: {
+            320: { slidesPerView: 1, spaceBetween: 10 },
+            768: { slidesPerView: 2, spaceBetween: 30 },
+            992: { slidesPerView: 3, spaceBetween: 40 }
+        }
+    });
+
+    // ===== Counter Animation =====
+    $('.counter').counterUp({
+        delay: 10,
+        time: 1000
+    });
+
+
+
+// ===== Enhanced Login Form =====
+// Login Form Handling
+$('#authForm').on('submit', function(e) {
+    e.preventDefault();
+    
+    const $form = $(this);
+    const $submitBtn = $form.find('button[type="submit"]');
+    const $spinner = $('#loadingSpinner');
+    const $submitText = $('#submitText');
+    
+    // Visual feedback
+    $submitText.text('Authenticating...');
+    $spinner.removeClass('d-none');
+    $submitBtn.prop('disabled', true);
+
+    // Get form data
+    const formData = {
+        username: $('#username').val().trim(),
+        password: $('#password').val()
+    };
+
+    // Validate locally first
+    if (!formData.username || !formData.password) {
+        alert('Username and password are required');
+        $submitText.text('Login');
+        $spinner.addClass('d-none');
+        $submitBtn.prop('disabled', false);
+        return;
+    }
+
+    // AJAX request with improved error handling
+    $.ajax({
+        type: 'POST',
+        url: $form.attr('action'),
+        data: formData,
+        dataType: 'json',
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Accept': 'application/json'
+        },
+        success: function(response) {
+            console.log('Login response received', response);
+            if (response.success) {
+                // Redirect to capture page or wherever specified
+                window.location.href = response.redirect || "/capture";
+            } else {
+                // Display error message if provided
+                alert(response.message || 'Login failed. Please try again.');
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error('Login error:', status, error);
+            let errorMsg = 'Login failed. Please check your credentials.';
+            
+            try {
+                // Try to parse response JSON
+                if (xhr.responseJSON) {
+                    const response = xhr.responseJSON;
+                    if (response && response.message) {
+                        errorMsg = response.message;
+                    }
+                } else if (xhr.responseText) {
+                    // Try to parse the response text as JSON
+                    const response = JSON.parse(xhr.responseText);
+                    if (response && response.message) {
+                        errorMsg = response.message;
+                    }
+                }
+            } catch (e) {
+                console.error('Error parsing error response:', e);
+            }
+            
+            alert(errorMsg);
+        },
+        complete: function() {
+            // Reset button state
+            $submitText.text('Login');
+            $spinner.addClass('d-none');
+            $submitBtn.prop('disabled', false);
+        }
+    });
+});
+
+    // ===== Signup Redirect =====
+    $('#toggleSignup').click(function(e) {
+        e.preventDefault();
+        window.location.href = $(this).attr('href');
+    });
+</script>
 </body>
 </html>

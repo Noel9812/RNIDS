@@ -1,2 +1,12 @@
 venv/
 __pycache__/
+firebase_config.py
+firebase-adminsdk.json
+team1.jpg
+team2.jpg
+team3.jpg
+team4.jpg
+SAE.ipynb
+train_explainer.py
+train_model.py
+.git

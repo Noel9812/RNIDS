@@ -10,3 +10,5 @@ lime==0.2.0.1
 dill==0.3.6
 tensorflow==2.11.0
 plotly==5.13.0
+swiper==6.8.4
+jquery==2.1.1
