@@ -115,7 +115,7 @@ The datasets are preprocessed using:
 
 ```bash
 # Clone the repo
-git clone https://github.com/your-username/rnids.git
+git clone https://github.com/Noel9812/RNIDS.git
 
 # Create virtual environment
 python -m venv venv
